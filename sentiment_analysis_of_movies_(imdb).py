@@ -25,6 +25,9 @@ nltk.download('punkt')
 import glob
 from gensim.models import Word2Vec
 
+# MacOSX: See https://www.mkyong.com/mac/wget-on-mac-os-x/ for wget
+print('On the MacOSX, you will need to install wget, see https://www.mkyong.com/mac/wget-on-mac-os-x/')
+
 if not os.path.isfile('aclImdb_v1.tar.gz'):
   !wget http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz 
 
@@ -49,25 +52,25 @@ def load_doc(filename):
 	file.close()
 	return text
 
-pos_strings = [load_doc(x) for x in positive_sample_file_list]
-print(pos_strings[:10])
+positive_strings = [load_doc(x) for x in positive_sample_file_list]
+print(positive_strings[:10])
 
-neg_strings = [load_doc(x) for x in negative_sample_file_list]
-print(neg_strings[:10])
+negative_strings = [load_doc(x) for x in negative_sample_file_list]
+print(negative_strings[:10])
 
-pos_labels = np.array(SAMPLE_SIZE * [[1,0]])
-pos_labels
+positive_labels = np.array(SAMPLE_SIZE * [[1,0]])
+positive_labels
 
-neg_labels = np.array(SAMPLE_SIZE * [[0,1]])
-neg_labels
+negative_labels = np.array(SAMPLE_SIZE * [[0,1]])
+negative_labels
 
-pos_tokenized = [word_tokenize(s) for s in pos_strings]
-print(pos_tokenized[1])
-print(pos_tokenized[2])
+positive_tokenized = [word_tokenize(s) for s in positive_strings]
+print(positive_tokenized[1])
+print(positive_tokenized[2])
 
-neg_tokenized = [word_tokenize(s) for s in neg_strings]
-print(neg_tokenized[1])
-print(neg_tokenized[2])
+negative_tokenized = [word_tokenize(s) for s in negative_strings]
+print(negative_tokenized[1])
+print(negative_tokenized[2])
 
 # load doc into memory
 with open('aclImdb/imdb.vocab') as f:
@@ -77,13 +80,13 @@ universe_vocabulary = [x.strip() for x in content]
 print(len(universe_vocabulary))
 print(len(set(universe_vocabulary)))
 
-model_ted = Word2Vec(sentences=pos_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
+model_ted = Word2Vec(sentences=positive_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
 model_ted.wv.most_similar("brother")
 
 print(np.linalg.norm(model_ted.wv['man'] - model_ted.wv['woman']))
 print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
 print(np.linalg.norm(model_ted.wv['brother'] - model_ted.wv['sister']))
-print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['ship']))
+print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))
 
 print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
 print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
