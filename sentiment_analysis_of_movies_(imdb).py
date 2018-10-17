@@ -86,7 +86,7 @@ model_ted.wv.most_similar("brother")
 print(np.linalg.norm(model_ted.wv['man'] - model_ted.wv['woman']))
 print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
 print(np.linalg.norm(model_ted.wv['brother'] - model_ted.wv['sister']))
-print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))
+print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))  ### boat or ship does not exist in the corpus so we get an error if we use them
 
 print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
 print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
