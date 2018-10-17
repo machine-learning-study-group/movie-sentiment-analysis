@@ -25,6 +25,8 @@ nltk.download('punkt')
 import glob
 from gensim.models import Word2Vec
 
+import time
+
 # MacOSX: See https://www.mkyong.com/mac/wget-on-mac-os-x/ for wget
 print('On the MacOSX, you will need to install wget, see https://www.mkyong.com/mac/wget-on-mac-os-x/')
 
@@ -34,6 +36,7 @@ if not os.path.isfile('aclImdb_v1.tar.gz'):
 if not os.path.isfile('aclImdb'):  
   !tar -xf aclImdb_v1.tar.gz
 
+time_beginning_of_notebook = time.time()
 SAMPLE_SIZE=600
 positive_sample_file_list = glob.glob(os.path.join('aclImdb/train/pos', "*.txt"))
 positive_sample_file_list = positive_sample_file_list[:SAMPLE_SIZE]
@@ -82,36 +85,38 @@ with open('aclImdb/imdb.vocab') as f:
 universe_vocabulary = [x.strip() for x in content]
 
 
-print(sum([len(token) for token in positive_tokenized]))
+print("Word count across all reviews (before stripping tokens):", sum([len(token) for token in positive_tokenized]))
 stripped_positive_tokenized = []
 for tokens in positive_tokenized:
   stripped_positive_tokenized.append([token.lower() for token in tokens if token.lower() in universe_vocabulary])
 
-print(sum([len(token) for token in stripped_positive_tokenized]))
+print("Word count across all reviews (after stripping tokens):", sum([len(token) for token in stripped_positive_tokenized]))
 
 print(positive_tokenized[0:5])
 print(stripped_positive_tokenized[0:5])
 
-print(sum([len(token) for token in positive_tokenized]))
+print("Word count across all reviews (before stripping tokens):", sum([len(token) for token in positive_tokenized]))
 stripped_negative_tokenized = []
 for tokens in negative_tokenized:
   stripped_negative_tokenized.append([token.lower() for token in tokens if token.lower() in universe_vocabulary])
 
-print(sum([len(token) for token in stripped_negative_tokenized]))
+print("Word count across all reviews (after stripping tokens):", sum([len(token) for token in stripped_negative_tokenized]))
 
 print(negative_tokenized[0:5])
 print(stripped_negative_tokenized[0:5])
 
-model_ted = Word2Vec(sentences=positive_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
-model_ted.wv.most_similar("brother")
+#### Commenting out this bit as it is adding to the time to load the notebook, we can uncomment it when we need to reuse it again
 
-print(np.linalg.norm(model_ted.wv['man'] - model_ted.wv['woman']))
-print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
-print(np.linalg.norm(model_ted.wv['brother'] - model_ted.wv['sister']))
-print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))  ### boat or ship does not exist in the corpus so we get an error if we use them
+# model_ted = Word2Vec(sentences=positive_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
+# model_ted.wv.most_similar("brother")
 
-print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
-print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
+# print(np.linalg.norm(model_ted.wv['man'] - model_ted.wv['woman']))
+# print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
+# print(np.linalg.norm(model_ted.wv['brother'] - model_ted.wv['sister']))
+# print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))  ### boat or ship does not exist in the corpus so we get an error if we use them
+
+# print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
+# print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
 
 features = np.array(stripped_positive_tokenized + stripped_negative_tokenized)
 labels = np.concatenate([positive_labels, negative_labels])
@@ -141,9 +146,11 @@ print(x_train[1])
 # print(y_train.shape)
 # print(y_test.shape)
 
-"""**Simple models**
+"""We have decided to do the use the below models and vectorisation techniques to test our their accuracy / score, the idea is to use a one model and one vectorization technique and plot a score.
 
-- Logistic
+**Simple models**
+
+- Logistic Regression
 - Random Forst
 - LSTM
 - GRU
@@ -155,6 +162,8 @@ print(x_train[1])
 - TFIDF (probability scores)
 - FastText
 - Glove
+
+## Logistic Regress model using Bag of Words vectorisation technique
 """
 
 from sklearn.linear_model import LogisticRegression
@@ -167,4 +176,20 @@ logisticRegr.fit(x_train, y_train)
 score = logisticRegr.score(x_test, y_test)
 print("Score: ", score)
 y_test = logisticRegr.predict(x_test)
+time_end_of_notebook = time.time()
 
+import pandas as pd
+table_models_vectorization = pd.DataFrame(
+     {'Models':                   ["Logistic Regression", "Logistic Regression"], 
+      'Vectorisation techniques': ["Bag of Words",        "Word2Vec"], 
+      'Score':                    [score,                 "Pending"]},
+    columns=['Models','Vectorisation techniques','Score']
+)
+print("Sample size:", SAMPLE_SIZE)
+
+duration = time_end_of_notebook - time_beginning_of_notebook
+
+print("Full notebook execution duration:", duration, "seconds")
+print("Full notebook execution duration:", duration / 60, "minutes")
+
+table_models_vectorization
