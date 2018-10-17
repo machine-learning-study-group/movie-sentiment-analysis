@@ -41,16 +41,20 @@ positive_sample_file_list = positive_sample_file_list[:SAMPLE_SIZE]
 negative_sample_file_list = glob.glob(os.path.join('aclImdb/train/neg', "*.txt"))
 negative_sample_file_list = negative_sample_file_list[:SAMPLE_SIZE]
 
+import re
 
 # load doc into memory
+# regex to clean markup elements 
 def load_doc(filename):
 	# open the file as read only
-	file = open(filename, 'r')
+	file = open(filename, 'r', encoding='utf8')
 	# read all text
-	text = file.read()
+	text = re.sub('<[^>]*>', ' ', file.read())
 	# close the file
 	file.close()
 	return text
+
+"""# New Section"""
 
 positive_strings = [load_doc(x) for x in positive_sample_file_list]
 print(positive_strings[:10])
@@ -58,11 +62,11 @@ print(positive_strings[:10])
 negative_strings = [load_doc(x) for x in negative_sample_file_list]
 print(negative_strings[:10])
 
-positive_labels = np.array(SAMPLE_SIZE * [[1,0]])
-positive_labels
+positive_labels = np.array(SAMPLE_SIZE * [1])
+print(positive_labels)
 
-negative_labels = np.array(SAMPLE_SIZE * [[0,1]])
-negative_labels
+negative_labels = np.array(SAMPLE_SIZE * [0])
+print(negative_labels)
 
 positive_tokenized = [word_tokenize(s) for s in positive_strings]
 print(positive_tokenized[1])
@@ -77,8 +81,26 @@ with open('aclImdb/imdb.vocab') as f:
   content = f.readlines()
 universe_vocabulary = [x.strip() for x in content]
 
-print(len(universe_vocabulary))
-print(len(set(universe_vocabulary)))
+
+print(sum([len(token) for token in positive_tokenized]))
+stripped_positive_tokenized = []
+for tokens in positive_tokenized:
+  stripped_positive_tokenized.append([token.lower() for token in tokens if token.lower() in universe_vocabulary])
+
+print(sum([len(token) for token in stripped_positive_tokenized]))
+
+print(positive_tokenized[0:5])
+print(stripped_positive_tokenized[0:5])
+
+print(sum([len(token) for token in positive_tokenized]))
+stripped_negative_tokenized = []
+for tokens in negative_tokenized:
+  stripped_negative_tokenized.append([token.lower() for token in tokens if token.lower() in universe_vocabulary])
+
+print(sum([len(token) for token in stripped_negative_tokenized]))
+
+print(negative_tokenized[0:5])
+print(stripped_negative_tokenized[0:5])
 
 model_ted = Word2Vec(sentences=positive_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
 model_ted.wv.most_similar("brother")
@@ -90,3 +112,59 @@ print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))  ### boat or
 
 print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
 print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
+
+features = np.array(stripped_positive_tokenized + stripped_negative_tokenized)
+labels = np.concatenate([positive_labels, negative_labels])
+# print(features.shape)
+# print(features)
+# print(labels.shape)
+# print(labels)
+
+from keras.preprocessing import text
+
+
+# GitHub reference: https://github.com/tensorflow/workshops/blob/master/extras/keras-bag-of-words/keras-bow-model.ipynb
+# Blog: https://cloud.google.com/blog/products/gcp/intro-to-text-classification-with-keras-automatically-tagging-stack-overflow-posts
+
+vocab_size = 1000
+tokenize = text.Tokenizer(num_words=vocab_size, char_level=False)
+tokenize.fit_on_texts(features)
+tokenized_features = tokenize.texts_to_matrix(features)
+
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(tokenized_features, labels, test_size=0.25)
+
+print(x_train[1])
+# print(x_train.shape)
+# print(x_test.shape)
+# print(y_train.shape)
+# print(y_test.shape)
+
+"""**Simple models**
+
+- Logistic
+- Random Forst
+- LSTM
+- GRU
+- CNN
+
+**Vectorisation techniques**
+- Bag of Words
+- Word2Vec
+- TFIDF (probability scores)
+- FastText
+- Glove
+"""
+
+from sklearn.linear_model import LogisticRegression
+
+# all parameters not specified are set to their defaults
+logisticRegr = LogisticRegression()
+
+logisticRegr.fit(x_train, y_train)
+
+score = logisticRegr.score(x_test, y_test)
+print("Score: ", score)
+y_test = logisticRegr.predict(x_test)
+
