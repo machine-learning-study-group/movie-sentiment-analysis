@@ -1,0 +1,78 @@
+<<<<<<< HEAD
+# Virtual environment
+venv/
+
+# Configuration files
+config.py
+configCopia.py
+config.pyc
+
+# Packages
+*.py[a-z]
+mysql*
+*.pyc
+migrations/*
+__pycache__/*
+_pycache_/*
+visualtool.py
+.pylintrc
+
+# Analysis
+*.png
+*.dot
+*.jsonl
+raw_data/*
+.ipynb_checkpoints/
+
+=======
+MANIFEST
+build
+dist
+_build
+docs/man/*.gz
+docs/source/api/generated
+docs/source/config.rst
+docs/gh-pages
+notebook/i18n/*/LC_MESSAGES/*.mo
+notebook/i18n/*/LC_MESSAGES/nbjs.json
+notebook/static/components
+notebook/static/style/*.min.css*
+notebook/static/*/js/built/
+notebook/static/*/built/
+notebook/static/built/
+notebook/static/*/js/main.min.js*
+notebook/static/lab/*bundle.js
+node_modules
+*.py[co]
+__pycache__
+*.egg-info
+*~
+*.bak
+.ipynb_checkpoints
+.tox
+.DS_Store
+\#*#
+.#*
+.coverage
+src
+
+*.swp
+*.map
+.idea/
+Read the Docs
+config.rst
+
+/.project
+/.pydevproject
+
+aclImdb/*
+package-lock.json
+raw_data/*
+reference/*
+reference_tweepy/*
+<<<<<<< HEAD
+reference_hands_on/*
+public_raw_data/*
+=======
+>>>>>>> origin/master
+>>>>>>> bc16eb92383465b63b3a98251455f10b3c93661f
