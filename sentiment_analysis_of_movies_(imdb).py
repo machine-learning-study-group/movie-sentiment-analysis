@@ -19,8 +19,12 @@ import os
 import os.path
 
 from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
+from nltk.corpus import stopwords
 import nltk
 nltk.download('punkt')
+import nltk
+
 
 import glob
 from gensim.models import Word2Vec
@@ -37,7 +41,7 @@ if not os.path.isfile('aclImdb'):
   !tar -xf aclImdb_v1.tar.gz
 
 time_beginning_of_notebook = time.time()
-SAMPLE_SIZE=600
+SAMPLE_SIZE=1000
 positive_sample_file_list = glob.glob(os.path.join('aclImdb/train/pos', "*.txt"))
 positive_sample_file_list = positive_sample_file_list[:SAMPLE_SIZE]
 
@@ -49,51 +53,48 @@ import re
 # load doc into memory
 # regex to clean markup elements 
 def load_doc(filename):
-	# open the file as read only
-	file = open(filename, 'r', encoding='utf8')
-	# read all text
-	text = re.sub('<[^>]*>', ' ', file.read())
-	# close the file
-	file.close()
-	return text
+    # open the file as read only
+    file = open(filename, 'r', encoding='utf8')
+    # read all text
+    text = re.sub('<[^>]*>', ' ', file.read())
+    #text = file.read()
+    # close the file
+    file.close()
+    return text
 
-"""# New Section"""
+"""# Data exploration"""
 
 positive_strings = [load_doc(x) for x in positive_sample_file_list]
-print(positive_strings[:10])
+#print('\n Positive reviews \n ',positive_strings[:5])
 
 negative_strings = [load_doc(x) for x in negative_sample_file_list]
-print(negative_strings[:10])
-
-positive_labels = np.array(SAMPLE_SIZE * [1])
-print(positive_labels)
-
-negative_labels = np.array(SAMPLE_SIZE * [0])
-print(negative_labels)
+#print('\n Negative reviews \n ', negative_strings[:5])
 
 positive_tokenized = [word_tokenize(s) for s in positive_strings]
-print(positive_tokenized[1])
-print(positive_tokenized[2])
+#print('\n Positive tokenized 1 \n {} \n\n Positive tokenized 2 \n {}'. format(positive_tokenized[1], positive_tokenized[2]))
 
 negative_tokenized = [word_tokenize(s) for s in negative_strings]
-print(negative_tokenized[1])
-print(negative_tokenized[2])
+#print('\n Negative tokenized 1 \n {} \n\n  Negative tokenized 2 \n {}'. format(negative_tokenized[1], negative_tokenized[2]))
 
 # load doc into memory
-with open('aclImdb/imdb.vocab') as f:
-  content = f.readlines()
-universe_vocabulary = [x.strip() for x in content]
-
+with open('aclImdb/imdb.vocab', encoding='utf8') as f:
+    #content = f.readlines()
+    universe_vocabulary = [x.strip() for x in f.readlines()]
 
 print("Word count across all reviews (before stripping tokens):", sum([len(token) for token in positive_tokenized]))
+
+#Checking the not alphanumeric characters in vocabulary
+non_alphanumeric_set = set()
+for word in universe_vocabulary:
+    non_alphanumeric_set |= set(re.findall('\W', word))
+print('Non alphanumeric characters found in universe vocabulary', non_alphanumeric_set)
+
+
 stripped_positive_tokenized = []
 for tokens in positive_tokenized:
   stripped_positive_tokenized.append([token.lower() for token in tokens if token.lower() in universe_vocabulary])
 
 print("Word count across all reviews (after stripping tokens):", sum([len(token) for token in stripped_positive_tokenized]))
-
-print(positive_tokenized[0:5])
-print(stripped_positive_tokenized[0:5])
 
 print("Word count across all reviews (before stripping tokens):", sum([len(token) for token in positive_tokenized]))
 stripped_negative_tokenized = []
@@ -102,51 +103,9 @@ for tokens in negative_tokenized:
 
 print("Word count across all reviews (after stripping tokens):", sum([len(token) for token in stripped_negative_tokenized]))
 
-print(negative_tokenized[0:5])
-print(stripped_negative_tokenized[0:5])
+"""## Modelling 
 
-#### Commenting out this bit as it is adding to the time to load the notebook, we can uncomment it when we need to reuse it again
-
-# model_ted = Word2Vec(sentences=positive_tokenized, size=100, window=5, min_count=5, workers=1, sg=0, seed=42)
-# model_ted.wv.most_similar("brother")
-
-# print(np.linalg.norm(model_ted.wv['man'] - model_ted.wv['woman']))
-# print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
-# print(np.linalg.norm(model_ted.wv['brother'] - model_ted.wv['sister']))
-# print(np.linalg.norm(model_ted.wv['house'] - model_ted.wv['road']))  ### boat or ship does not exist in the corpus so we get an error if we use them
-
-# print(np.linalg.norm(model_ted.wv['father'] - model_ted.wv['mother']))
-# print(np.linalg.norm(model_ted.wv['sister'] - model_ted.wv['mother']))
-
-features = np.array(stripped_positive_tokenized + stripped_negative_tokenized)
-labels = np.concatenate([positive_labels, negative_labels])
-# print(features.shape)
-# print(features)
-# print(labels.shape)
-# print(labels)
-
-from keras.preprocessing import text
-
-
-# GitHub reference: https://github.com/tensorflow/workshops/blob/master/extras/keras-bag-of-words/keras-bow-model.ipynb
-# Blog: https://cloud.google.com/blog/products/gcp/intro-to-text-classification-with-keras-automatically-tagging-stack-overflow-posts
-
-vocab_size = 1000
-tokenize = text.Tokenizer(num_words=vocab_size, char_level=False)
-tokenize.fit_on_texts(features)
-tokenized_features = tokenize.texts_to_matrix(features)
-
-
-from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test = train_test_split(tokenized_features, labels, test_size=0.25)
-
-print(x_train[1])
-# print(x_train.shape)
-# print(x_test.shape)
-# print(y_train.shape)
-# print(y_test.shape)
-
-"""We have decided to do the use the below models and vectorisation techniques to test our their accuracy / score, the idea is to use a one model and one vectorization technique and plot a score.
+We have decided to do the use the below models and vectorisation techniques to test our their accuracy / score, the idea is to use a one model and one vectorization technique and plot a score.
 
 **Simple models**
 
@@ -163,26 +122,128 @@ print(x_train[1])
 - FastText
 - Glove
 
+## Logistic Regression.
+## Introducing Pipeline: http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
+
+## Introducing TfdfVectorizer: http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
+
+## Introducing cross_val_score http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html
+
+
+<br>
+"""
+
+import pandas as pd
+from sklearn.utils import shuffle
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+
+df_positives = pd.DataFrame({'reviews':[load_doc(x) for x in positive_sample_file_list], 'sentiment': np.ones(SAMPLE_SIZE)})
+df_negatives = pd.DataFrame({'reviews':[load_doc(x) for x in negative_sample_file_list], 'sentiment': np.zeros(SAMPLE_SIZE)})
+
+print("Positive review(s):", df_positives['reviews'][1])
+print("Negative review(s):", df_negatives['reviews'][1])
+
+df = pd.concat([df_positives, df_negatives], ignore_index=True)
+
+df = shuffle(df)
+
+X_train, X_test, y_train, y_test = train_test_split(df['reviews'], df['sentiment'], test_size=0.25)
+
+"""CountVec = CountVectorizer()
+# Creating the BoW with the set of all the documents and transforming the documents in feature vectors
+bag_of_words = CountVec.fit_transform(df['reviews'])
+
+print(type(bag_of_words))
+print('\n Number of raws {} (documents) -- Number of columns {} (vocabulary) \n'.format(bag_of_words.shape[0], bag_of_words.shape[1]))
+
+# https://machinelearningmastery.com/sparse-matrices-for-machine-learning/
+# This is a sparse matrix 
+print('\n Type of bag_of_words {} \n'.format(type(bag_of_words)))
+sparsity = 1.0 - bag_of_words.nnz / (bag_of_words.shape[0] * bag_of_words.shape[1])
+print('\n Sparsity {} \n'.format(sparsity))
+
+# This is a  
+print('\n Type of bag_of_words.toarray {} \n'.format(type(bag_of_words.toarray())))
+
+# In CountVec we have the vocabulary as an attribute
+print('\n Type of CountVec.vocabulary {} \n'.format(type(CountVec.vocabulary_)))
+print('A sample of CountVec.vocabulary_ {}'.format([(k, v) for k, v in CountVec.vocabulary_.items() if v < 1000]))
+
+# In bag_of_words we have the vector features representing each single document 
+print('\n Type of bag_of_words.toarray() {} \n')
+print('\n First feature vector, representing the first document \n', bag_of_words[0, :])
+
+# Lets get our training and test data
+X_train, X_test, y_train, y_test = train_test_split(bag_of_words.toarray(), df['sentiment'].values, test_size=0.25)
+
+clf = LogisticRegression(random_state=0)
+clf.fit(X_train, y_train)
+print(clf.score(X_test, y_test))
+
+
+
+results = [(predicted, actual) for predicted, actual in zip(clf.predict(X_test),  y_test) 
+           if  predicted == actual]
+
+print('Percentage of correct predicted values{}'.format(len(results)/len(y_test)))
+
 ## Logistic Regress model using Bag of Words vectorisation technique
 """
 
-from sklearn.linear_model import LogisticRegression
+CountVec = CountVectorizer()
+lr_CV = Pipeline([('vect', CountVec), ('clf', LogisticRegression(random_state=0))])
+lr_CV.fit(X_train, y_train)
+print('Train accuracy {}'.format(lr_CV.score(X_train, y_train)))
+print('Test accuracy {}'.format(lr_CV.score(X_test, y_test)))
 
-# all parameters not specified are set to their defaults
-logisticRegr = LogisticRegression()
+# # Trying with cross_val_score
+lr = LogisticRegression()
+k_folds = 10
+X_train_CV = CountVec.fit_transform(X_train)
+type(X_train_CV)
+print('Train accuracy list {} '.format(cross_val_score(lr, X_train_CV, y_train, cv= k_folds))) 
+print('Train accuracy mean {} '.format(cross_val_score(lr, X_train_CV, y_train, cv= k_folds).mean()))
 
-logisticRegr.fit(x_train, y_train)
+"""## Logistic Regress model using TfidfVectorizer vectorisation technique"""
 
-score = logisticRegr.score(x_test, y_test)
-print("Score: ", score)
-y_test = logisticRegr.predict(x_test)
+tfidf = TfidfVectorizer(strip_accents=None, lowercase=False, preprocessor=None)
+
+lr_tfidf = Pipeline([('vect', tfidf), ('clf', LogisticRegression(random_state=0))])
+lr_tfidf.fit(X_train, y_train)
+print('Train accuracy {}'.format(lr_tfidf.score(X_train, y_train)))
+print('Test accuracy {}'.format(lr_tfidf.score(X_test, y_test)))
+
+# Trying with cross_val_score
+lr = LogisticRegression()
+k_folds = 10
+X_train_tfidf = tfidf.fit_transform(X_train)
+print('Train accuracy list {} '.format(cross_val_score(lr, X_train_tfidf, y_train, cv= k_folds))) 
+print('Train accuracy mean {} '.format(cross_val_score(lr, X_train_tfidf, y_train, cv= k_folds).mean()))
+
+"""## Logistic Regress model using TfidfVectorizer and different values for C hyperparameter"""
+
+C_values = np.arange(1,2,0.1)
+results = []
+
+for value in C_values:   
+    lr_tfidf = Pipeline([('vect', tfidf), ('clf', LogisticRegression(random_state=0, C=value))])
+    lr_tfidf.fit(X_train, y_train)
+    train_score = lr_tfidf.score(X_train, y_train)
+    score = lr_tfidf.score(X_test, y_test)
+    print('C_value {} Test Score {} Train_score {}'.format(value, score, train_score))
+    results.append(score)
+
 time_end_of_notebook = time.time()
 
-import pandas as pd
 table_models_vectorization = pd.DataFrame(
-     {'Models':                   ["Logistic Regression", "Logistic Regression"], 
-      'Vectorisation techniques': ["Bag of Words",        "Word2Vec"], 
-      'Score':                    [score,                 "Pending"]},
+     {'Models':                   ["Logistic Regression", "Logistic Regression", "Logistic Regression"], 
+      'Vectorisation techniques': ["Bag of Words",        "Word2Vec", "TFIDF"], 
+      'Score':                    [score,                 "Pending", lr_tfidf.score(X_train, y_train) ]},
     columns=['Models','Vectorisation techniques','Score']
 )
 print("Sample size:", SAMPLE_SIZE)
@@ -193,3 +254,151 @@ print("Full notebook execution duration:", duration, "seconds")
 print("Full notebook execution duration:", duration / 60, "minutes")
 
 table_models_vectorization
+
+"""**The below two code blocks replaces the original/inital BoW implementation using Scikit-learn**"""
+
+CountVec = CountVectorizer()
+# Creating the BoW with the set of all the documents and transforming the documents in feature vectors
+bag_of_words = CountVec.fit_transform(df['reviews'])
+
+print(type(bag_of_words))
+print('\n Number of raws {} (documents) -- Number of columns {} (vocabulary) \n'.format(bag_of_words.shape[0], bag_of_words.shape[1]))
+
+# https://machinelearningmastery.com/sparse-matrices-for-machine-learning/
+# This is a sparse matrix 
+print('\n Type of bag_of_words {} \n'.format(type(bag_of_words)))
+sparsity = 1.0 - bag_of_words.nnz / (bag_of_words.shape[0] * bag_of_words.shape[1])
+print('\n Sparsity {} \n'.format(sparsity))
+
+# This is a  
+print('\n Type of bag_of_words.toarray {} \n'.format(type(bag_of_words.toarray())))
+
+# In CountVec we have the vocabulary as an attribute
+print('\n Type of CountVec.vocabulary {} \n'.format(type(CountVec.vocabulary_)))
+print('A sample of CountVec.vocabulary_ {}'.format([(k, v) for k, v in CountVec.vocabulary_.items() if v < 1000]))
+
+# In bag_of_words we have the vector features representing each single document 
+print('\n Type of bag_of_words.toarray() {} \n')
+print('\n First feature vector, representing the first document \n', bag_of_words[0, :2])
+
+# Lets get our training and test data
+X_train, X_test, y_train, y_test = train_test_split(bag_of_words.toarray(), df['sentiment'].values, test_size=0.25)
+
+clf = LogisticRegression(random_state=0)
+clf.fit(X_train, y_train)
+print('Using score function: {}'.format(clf.score(X_test, y_test)))
+
+
+results = [(predicted, actual) for predicted, actual in zip(clf.predict(X_test),  y_test) 
+           if  predicted == actual]
+
+print('Percentage of correct predicted values: {}'.format(len(results)/len(y_test)))
+
+"""### RandomForestClassifer"""
+
+from sklearn.ensemble import RandomForestClassifier
+
+clf = RandomForestClassifier(n_estimators=1000)
+clf.fit(X_train, y_train)
+print('Using score function: {}'.format(clf.score(X_test, y_test)))
+
+
+results = [(predicted, actual) for predicted, actual in zip(clf.predict(X_test),  y_test) 
+           if  predicted == actual]
+
+print('Percentage of correct predicted values: {}'.format(len(results)/len(y_test)))
+
+"""### RandomForestClassifer with TFIDF (Pipeline)"""
+
+tfidf = TfidfVectorizer(strip_accents=None, lowercase=False, preprocessor=None)
+
+
+X_train, X_test, y_train, y_test = train_test_split(df['reviews'], df['sentiment'], test_size=0.25)
+
+lr_tfidf = Pipeline([('vect', tfidf), ('clf', RandomForestClassifier(n_estimators=1000))])
+lr_tfidf.fit(X_train, y_train)
+print('Train accuracy {}'.format(lr_tfidf.score(X_train, y_train)))
+print('Test accuracy {}'.format(lr_tfidf.score(X_test, y_test)))
+
+# Trying with cross_val_score
+lr = LogisticRegression()
+k_folds = 10
+X_train_tfidf = tfidf.fit_transform(X_train)
+print('Train accuracy list {} '.format(cross_val_score(lr, X_train_tfidf, y_train, cv= k_folds))) 
+print('Train accuracy mean {} '.format(cross_val_score(lr, X_train_tfidf, y_train, cv= k_folds).mean()))
+
+"""### LSTM with Keras (Sequential model)
+
+
+Please note that the below code is executed on GPU instances on Colab, this wont work on your local machine, use the flag to enable/disable running in CPU or GPU mode, set `run_in_GPU_mode_on_colab=false` in order to be able to run in CPU mode.
+"""
+
+import tensorflow as tf
+
+def lstm_keras():
+  from keras.models import Sequential
+  from keras.layers import Dense, Activation, Embedding, LSTM
+  from keras.preprocessing.text import Tokenizer
+  from sklearn.preprocessing import LabelBinarizer
+
+
+  X_train, X_test, y_train, y_test = train_test_split(df['reviews'], df['sentiment'], test_size=0.25)
+
+  vocab_size = 1000
+  tokenize = Tokenizer(num_words=vocab_size)
+  tokenize.fit_on_texts(X_train)
+
+  encoded_X_train = tokenize.texts_to_matrix(X_train)
+  encoded_X_test = tokenize.texts_to_matrix(X_test)
+
+  encoder = LabelBinarizer()
+  encoder.fit(y_train)
+  encoded_y_train = encoder.transform(y_train)
+  encoded_y_test = encoder.transform(y_test)
+
+  max_features = 1000
+  model = Sequential()
+  model.add(Embedding(max_features, 128, dropout=0.2))
+  model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))  # try using a GRU instead, for fun
+  model.add(Dense(1))
+  model.add(Activation('sigmoid'))
+
+  model.compile(loss='binary_crossentropy',
+               optimizer='adam',
+               metrics=['accuracy'])
+
+  batch_size=64
+  epochs=10
+  history = model.fit(encoded_X_train, encoded_y_train, 
+                  batch_size=batch_size, 
+                  epochs=epochs, 
+                  verbose=1, 
+                  validation_split=0.1)
+
+  score = model.evaluate(encoded_X_test, encoded_y_test, 
+                         batch_size=batch_size, verbose=1)
+  print('Test score:', score[0])
+  print('Test accuracy:', score[1])
+
+
+run_in_GPU_mode_on_colab=False
+
+if run_in_GPU_mode_on_colab:  
+  config = tf.ConfigProto()
+  config.gpu_options.allow_growth = True
+
+  with tf.device('/gpu:0'):
+    session_gpu = tf.Session(config=config)
+    session_gpu.run(tf.global_variables_initializer())
+    session_gpu.run(tf.tables_initializer())
+    start = time.time()
+    session_gpu.run(lstm_keras())
+    end = time.time()
+    gpu_time = end - start
+    print('Duration on the GPU: {} seconds'.format(gpu_time))
+else:
+  start = time.time()
+  lstm_keras()
+  end = time.time()
+  cpu_time = end - start
+  print('Duration on the CPU: {} seconds'.format(cpu_time))
