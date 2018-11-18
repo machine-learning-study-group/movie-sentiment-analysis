@@ -17,6 +17,7 @@ gast==0.2.0
 gensim==3.6.0
 grpcio==1.16.1
 h5py==2.8.0
+hurry.filesize==0.9
 idna==2.7
 ipykernel==5.1.0
 ipython==7.0.1
@@ -56,6 +57,7 @@ ptyprocess==0.6.0
 Pygments==2.2.0
 pyparsing==2.2.2
 python-dateutil==2.7.3
+python3-wget==0.0.2b1
 pytz==2018.5
 PyYAML==3.13
 pyzmq==17.1.2
