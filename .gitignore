@@ -23,6 +23,7 @@ visualtool.py
 raw_data/*
 .ipynb_checkpoints/
 
+=======
 MANIFEST
 build
 dist
@@ -63,9 +64,7 @@ config.rst
 /.project
 /.pydevproject
 
-**/aclImdb
-aclImdb/
-./aclImdb
+aclImdb_v1.tar.gz
 aclImdb/*
 package-lock.json
 raw_data/*
