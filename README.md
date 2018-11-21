@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-# Update Session 21st Nov 2018
+## Update Session 21st Nov 2018
 
 We so far looked at the data, tried different vectorization techniques (bag of words and TFIDF), trained logistic registration and random forest models.
 
