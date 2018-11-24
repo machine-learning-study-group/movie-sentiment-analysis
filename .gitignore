@@ -66,6 +66,7 @@ config.rst
 
 aclImdb_v1.tar.gz
 aclImdb/*
+**/aclImdb
 package-lock.json
 raw_data/*
 reference/*
