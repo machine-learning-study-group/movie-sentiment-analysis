@@ -1,21 +1,25 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 28th Nov 2018
+## Update Session 5th Dec 2018
 
-We so far looked at the data, tried different vectorization techniques (bag of words and TFIDF), trained logistic registration, random forest and NN models.
+We so far 
+- explored the data in 1_data_exploration.ipynb
+- tried different vectorization techniques (bag of words and TFIDF) in 2_spot_check_algos.ipynb
+- check multiple algorithms and compared performances: logistic registration, random forest and NN models. 
+- started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
 
 In this session, 
-- We separated our data into training and validation sets (we would use the validation set later to evaluate the accuracy of our algorithm once we tested it on multiple models, with different hyper parameters).
-- We splitted our training set into 3 folds training + cross validation set. So that we test 3 times a model with 3 different splits of our data, and get the mean accuracy in the end.
-- Ran it on Keras NN, and plotted the results on accuracy across the 3 folds.
+work on 3_opti_neural_net.ipynb:
+- Optimize our NN on trying no / low / high dropout on 1 / 2 layers
+- try another NN architecture using embedding layer
+- used google colab during the session
 
-- We also quickly experimented google colab at the very end. We'll try to use it from next session to get everyone to participate.
-
-Next week, we will work on optimizing this neural network with different hyper parameters (nb of layer units, epochs, activation units, layers etc) and plot the results to compare their performances.
+Next week, we will carry on with optimization, try different hyper parameters (nb of layer units, epochs, activation units, layers etc) and plot the results to compare their performances.
 
 In the following weeks, we will
 - try different vectorization techniques
+- optimize our NN model
 - try different NN architectures
 
 
@@ -25,8 +29,6 @@ run `pip install -r requirements.txt' to install the dependencies in your python
 
 ### Jupyter notebook
 we have multiple notebooks, check the commits to see which one we worked on in last session. Check also the pull requests in case they haven't been merged yet.
-
-`Sentiment_analysis_of_movies_(IMDB).ipynb` created on [Google Colab](https://colab.research.google.com).
 
 
 ### Data 
