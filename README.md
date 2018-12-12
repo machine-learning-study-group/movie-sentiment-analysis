@@ -1,26 +1,34 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 5th Dec 2018
+## Update Session 12th Dec 2018
 
-We so far 
+**We so far **
 - explored the data in 1_data_exploration.ipynb
 - tried different vectorization techniques (bag of words and TFIDF) in 2_spot_check_algos.ipynb
 - check multiple algorithms and compared performances: logistic registration, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
 
-In this session, 
-work on 3_opti_neural_net.ipynb:
-- Optimize our NN on trying no / low / high dropout on 1 / 2 layers
-- try another NN architecture using embedding layer
-- used google colab during the session
+**In this session**, 
 
-Next week, we will carry on with optimization, try different hyper parameters (nb of layer units, epochs, activation units, layers etc) and plot the results to compare their performances.
+we read those articles:
+- https://github.com/tensorflow/workshops/blob/master/extras/keras-bag-of-words/keras-bow-model.ipynb to understand the notions of bag of words, tokenizer, sparse matrix, etc
+- https://towardsdatascience.com/a-beginners-guide-on-sentiment-analysis-with-rnn-9e100627c02e to work on RNN
 
-In the following weeks, we will
-- try different vectorization techniques
-- optimize our NN model
+work on contributions/keras_lstm_nn.ipynb:
+- we came back to our work on LSTM and fixed it: we were using previously the wrong vectorization technique to work with RNN: for each row we needed to use a vector of indices (which keeps the order of words) rather than a sparse vector (from bag of words).
+
+**Next week**, 
+we will read the chapter 1 (Text Classification) and its mentioned articles  of
+https://machinelearningmastery.com/applications-of-deep-learning-for-natural-language-processing/
+
+and work to implement a Convolutional Neural Network
+
+**In the following weeks**, we will
 - try different NN architectures
+- plot the results of all different architectures and compare them
+- optimize our NN model
+- try cloud based APIs to compare how they perform against our models
 
 
 ### Setup
