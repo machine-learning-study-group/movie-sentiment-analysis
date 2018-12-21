@@ -1,18 +1,19 @@
+#ML STUDY GROUP
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
-
-# import cPickle as pkl
-# import _pickle as pkl
 import numpy as np
 
 class PreProcessor:
-    def __init__(self,TRAIN_DATA,VAL_DATA,WE_FILE):
-        self.reviews = TRAIN_DATA
-        self.reviews_val = VAL_DATA
+    def __init__(self,REVIEWS,REVIEWS_VAL,LABELS,LABELS_VAL,WE_FILE):
+        self.reviews = REVIEWS
+        self.reviews_val = REVIEWS_VAL
+        self.labels = LABELS
+        self.labels_val = LABELS_VAL
         self.we_file = WE_FILE
 
     def tokenize(self):
+#         set_trace()
         print(self.reviews[0])
 
         tokenizer = Tokenizer()
@@ -23,10 +24,39 @@ class PreProcessor:
 
         self.word_index = tokenizer.word_index
         print("Found %s unique tokens" %(len(self.word_index)))
-        
-        self.MAX_SEQUENCE_LENGTH = max([len(self.sequences[i]) for i in range(len(self.sequences))])
+
+    def make_data(self):
+        self.MAX_SEQUENCE_LENGTH=1000
+#         self.MAX_SEQUENCE_LENGTH = max([len(self.sequences[i]) for i in range(len(self.sequences))])
         print("self.MAX_SEQUENCE_LENGTH: {}".format(self.MAX_SEQUENCE_LENGTH))
 
+        data = pad_sequences(self.sequences,maxlen=self.MAX_SEQUENCE_LENGTH)
+        data_val = pad_sequences(self.sequences_val,maxlen=self.MAX_SEQUENCE_LENGTH)
+
+#         labels_index = {} # labels_index["Henry IV of France"]
+#         answers_index = {} # answers_index[0]
+
+#         for i,j in enumerate(answers):
+#             labels_index[j] = i
+#             answers_index[i] = j
+
+#         labels = np.zeros((len(self.sequences),1))
+#         labels_val = np.zeros((len(self.sequences_val),1))
+
+#         for i in range(len(self.sequences)):
+#             labels[i] = labels_index[self.reviews_data[i,1]]
+
+#         for i in range(len(self.sequences_val)):
+#             labels_val[i] = labels_index[self.val_data[i,1]]
+
+#         labels = to_categorical(labels,num_classes=len(answers))
+#         labels_val = to_categorical(labels_val,num_classes=len(answers))
+
+#         print("Shape of data tensor: " +str(data.shape))
+#         print("Shape of label tensor: " +str(labels.shape))
+
+        return data, self.labels, data_val, self.labels_val
+        
     def get_word_embedding_matrix(self,EMBEDDING_DIM=100):
         embeddings_index = {}
 
@@ -53,6 +83,3 @@ class PreProcessor:
                 self.embedding_matrix[i] = embedding_vector
 
         return self.embedding_matrix
-
-if __name__ == "__main__":
-	pass
