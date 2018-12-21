@@ -3,7 +3,7 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 
 # import cPickle as pkl
-import _pickle as pkl
+# import _pickle as pkl
 import numpy as np
 
 class PreProcessor:
@@ -23,6 +23,9 @@ class PreProcessor:
 
         self.word_index = tokenizer.word_index
         print("Found %s unique tokens" %(len(self.word_index)))
+        
+        self.MAX_SEQUENCE_LENGTH = max([len(self.sequences[i]) for i in range(len(self.sequences))])
+        print("self.MAX_SEQUENCE_LENGTH: {}".format(self.MAX_SEQUENCE_LENGTH))
 
     def get_word_embedding_matrix(self,EMBEDDING_DIM=100):
         embeddings_index = {}
