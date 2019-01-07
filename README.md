@@ -1,28 +1,33 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 12th Dec 2018
+## Update Session 19th Dec 2018 
 
-**We so far **
+**We so far**
 - explored the data in 1_data_exploration.ipynb
 - tried different vectorization techniques (bag of words and TFIDF) in 2_spot_check_algos.ipynb
 - check multiple algorithms and compared performances: logistic registration, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
+- tried different architectures in experiments folder: LSTM, DAN
 
 **In this session**, 
 
-we read those articles:
-- https://github.com/tensorflow/workshops/blob/master/extras/keras-bag-of-words/keras-bow-model.ipynb to understand the notions of bag of words, tokenizer, sparse matrix, etc
-- https://towardsdatascience.com/a-beginners-guide-on-sentiment-analysis-with-rnn-9e100627c02e to work on RNN
+we read that research paper on a simple deep NN competing with more complex NN (like CNN and RNN) on sentiment analysis: 
+Deep Averaging Network DAN
+https://cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf
 
-work on contributions/keras_lstm_nn.ipynb:
-- we came back to our work on LSTM and fixed it: we were using previously the wrong vectorization technique to work with RNN: for each row we needed to use a vector of indices (which keeps the order of words) rather than a sparse vector (from bag of words).
+implemented on experiments/keras_dan.ipynb:
 
-**Next week**, 
-we will read the chapter 1 (Text Classification) and its mentioned articles  of
-https://machinelearningmastery.com/applications-of-deep-learning-for-natural-language-processing/
+**Next session 9th Jan**, 
 
-and work to implement a Convolutional Neural Network
+As a prerequisite, please get familiar with that research paper on sentence classification with CNN, and related article (tensorflow rewrite): 
+https://arxiv.org/abs/1408.5882
+http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
+
+We will implement a Convolutional Neural Network following those articles
+
+one of our members committed an implementation of CNN with keras in experiments/keras_nn_cnn.ipynb, you can also have a look at it
+
 
 **In the following weeks**, we will
 - try different NN architectures
