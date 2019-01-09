@@ -1,26 +1,39 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 5th Dec 2018
+## Update Session 19th Dec 2018 
 
-We so far 
+**We so far**
 - explored the data in 1_data_exploration.ipynb
 - tried different vectorization techniques (bag of words and TFIDF) in 2_spot_check_algos.ipynb
 - check multiple algorithms and compared performances: logistic registration, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
+- tried different architectures in experiments folder: LSTM, DAN
 
-In this session, 
-work on 3_opti_neural_net.ipynb:
-- Optimize our NN on trying no / low / high dropout on 1 / 2 layers
-- try another NN architecture using embedding layer
-- used google colab during the session
+**In this session**, 
 
-Next week, we will carry on with optimization, try different hyper parameters (nb of layer units, epochs, activation units, layers etc) and plot the results to compare their performances.
+we read that research paper on a simple deep NN competing with more complex NN (like CNN and RNN) on sentiment analysis: 
+Deep Averaging Network DAN
+https://cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf
 
-In the following weeks, we will
-- try different vectorization techniques
-- optimize our NN model
+implemented on experiments/keras_dan.ipynb:
+
+**Next session 9th Jan**, 
+
+As a prerequisite, please get familiar with that research paper on sentence classification with CNN, and related article (tensorflow rewrite): 
+https://arxiv.org/abs/1408.5882
+http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
+
+We will implement a Convolutional Neural Network following those articles
+
+one of our members committed an implementation of CNN with keras in experiments/keras_nn_cnn.ipynb, you can also have a look at it
+
+
+**In the following weeks**, we will
 - try different NN architectures
+- plot the results of all different architectures and compare them
+- optimize our NN model
+- try cloud based APIs to compare how they perform against our models
 
 
 ### Setup
