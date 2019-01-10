@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 19th Dec 2018 
+## Update Session 9th Jan 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
@@ -12,22 +12,20 @@ Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 201
 
 **In this session**, 
 
-we read that research paper on a simple deep NN competing with more complex NN (like CNN and RNN) on sentiment analysis: 
-Deep Averaging Network DAN
-https://cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf
-
-implemented on experiments/keras_dan.ipynb:
-
-**Next session 9th Jan**, 
-
-As a prerequisite, please get familiar with that research paper on sentence classification with CNN, and related article (tensorflow rewrite): 
+we read that research paper on sentence classification with CNN, and two related article (tensorflow rewrite, explanation of CNN use in NLP): 
 https://arxiv.org/abs/1408.5882
 http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
+http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/
 
-We will implement a Convolutional Neural Network following those articles
+We went through the code of the following files of the tensorflow implementation https://github.com/dennybritz/cnn-text-classification-tf to understand it: train.py, eval.py and text_cnn.py
 
-one of our members committed an implementation of CNN with keras in experiments/keras_nn_cnn.ipynb, you can also have a look at it
+**Next session 16th Jan**, 
 
+We will carry on the work of the previous session and reimplement it in Keras (it should be way simpler than in tensorflow).
+
+We will add if we have enough time, the pre trained embedding with word2vec.
+
+As a prerequesite, please read at least the 2 articles from wildml.
 
 **In the following weeks**, we will
 - try different NN architectures
