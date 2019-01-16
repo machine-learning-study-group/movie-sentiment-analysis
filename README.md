@@ -1,31 +1,34 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 9th Jan 2019 
+## Update Session 16th Jan 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
 - tried different vectorization techniques (bag of words and TFIDF) in 2_spot_check_algos.ipynb
-- check multiple algorithms and compared performances: logistic registration, random forest and NN models. 
+- check multiple algorithms and compared performances: logistic regression, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
-- tried different architectures in experiments folder: LSTM, DAN
+- tried different architectures in experiments folder: LSTM, DAN, CNN
 
 **In this session**, 
 
-we read that research paper on sentence classification with CNN, and two related article (tensorflow rewrite, explanation of CNN use in NLP): 
-https://arxiv.org/abs/1408.5882
-http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
-http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/
+We started implementing a CNN in Keras with multiple filters, in experiments/keras_nn_cnn_20190116.ipynb, using the following:
 
-We went through the code of the following files of the tensorflow implementation https://github.com/dennybritz/cnn-text-classification-tf to understand it: train.py, eval.py and text_cnn.py
+https://arxiv.org/abs/1408.5882 research paper on sentence classification with CNN
+http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ tensorflow rewrite
+http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/ explanation of CNN use in NLP
 
-**Next session 16th Jan**, 
+https://github.com/dennybritz/cnn-text-classification-tf tensorflow rewrite code
 
-We will carry on the work of the previous session and reimplement it in Keras (it should be way simpler than in tensorflow).
+We prepared the data, initiated the model with embedding, convolution/pooling layers with dropout and output layer with softmax (with hopefully the correct dimensions ;) ). We now have to change the model to use multiple filters, I added a couple links about people's attempts at that, train it and evaluate it.
+
+**Next session 23rd Jan**, 
+
+We will carry on the work of the previous session and complete the reimplementation in Keras.
 
 We will add if we have enough time, the pre trained embedding with word2vec.
 
-As a prerequesite, please read at least the 2 articles from wildml.
+As a prerequesite, please read at least the 2 articles from wildml and our work so far in experiments/keras_nn_cnn_20190116.ipynb
 
 **In the following weeks**, we will
 - try different NN architectures
