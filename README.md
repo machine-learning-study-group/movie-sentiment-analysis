@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 16th Jan 2019 
+## Update Session 23rd Jan 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
@@ -12,23 +12,19 @@ Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 201
 
 **In this session**, 
 
-We started implementing a CNN in Keras with multiple filters, in experiments/keras_nn_cnn_20190116.ipynb, using the following:
+We completed the implementation of a CNN in Keras with multiple channels, in experiments/keras_cnn_with_multiple_channels.ipynb, using the following:
 
-https://arxiv.org/abs/1408.5882 research paper on sentence classification with CNN
-http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ tensorflow rewrite
-http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/ explanation of CNN use in NLP
+http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ sentence classification with CNN with tensorflow
+https://machinelearningmastery.com/develop-n-gram-multichannel-convolutional-neural-network-sentiment-analysis/ cnn in keras with multiple channels
 
-https://github.com/dennybritz/cnn-text-classification-tf tensorflow rewrite code
+We implemented the multiple channels and trained on our data, reaching around 80% acc on test data. We started adding pre trained embedding from our work on dan cnn in experiments/keras_cnn_with_pretrained_embedding.ipynb
 
-We prepared the data, initiated the model with embedding, convolution/pooling layers with dropout and output layer with softmax (with hopefully the correct dimensions ;) ). We now have to change the model to use multiple filters, I added a couple links about people's attempts at that, train it and evaluate it.
+**Next session 30th Jan**, 
+recommended homework: please read before coming the article from wildml above and check our work so far in experiments/keras_cnn_with_multiple_channels.ipynb and experiments/keras_cnn_with_pretrained_embedding.ipynb (WIP). If you don't, it's going to be really hard to follow ;).
 
-**Next session 23rd Jan**, 
+We will carry on the work of the previous session and fix the CNN with the pre trained embedding from Glove. We will compare the results of training the embedding on our dataset vs not doing it.
 
-We will carry on the work of the previous session and complete the reimplementation in Keras.
-
-We will add if we have enough time, the pre trained embedding with word2vec.
-
-As a prerequesite, please read at least the 2 articles from wildml and our work so far in experiments/keras_nn_cnn_20190116.ipynb
+If we have enough time, We will define a reasonnable dataset and vocabulary size and train with those parameters, then compare the accuracies obtained. We will run the training on GPU on colab and compare the amounts of time to process it.
 
 **In the following weeks**, we will
 - try different NN architectures
