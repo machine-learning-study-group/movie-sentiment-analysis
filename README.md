@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 23rd Jan 2019 
+## Update Session 30th Jan 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
@@ -9,22 +9,22 @@ Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 201
 - check multiple algorithms and compared performances: logistic regression, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
 - tried different architectures in experiments folder: LSTM, DAN, CNN
+- tried with pre trained embeddings from Glove and Google (word2vec)
 
 **In this session**, 
 
-We completed the implementation of a CNN in Keras with multiple channels, in experiments/keras_cnn_with_multiple_channels.ipynb, using the following:
+We completed the implementation of a CNN in Keras with multiple channels and pre trained embedding, in experiments/keras_cnn_with_pretrained_embedding.ipynb, using the following:
 
 http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ sentence classification with CNN with tensorflow
 https://machinelearningmastery.com/develop-n-gram-multichannel-convolutional-neural-network-sentiment-analysis/ cnn in keras with multiple channels
 
-We implemented the multiple channels and trained on our data, reaching around 80% acc on test data. We started adding pre trained embedding from our work on dan cnn in experiments/keras_cnn_with_pretrained_embedding.ipynb
+We ran the two cnn notebooks with and without pre trained embedding on Google Colab with gpu (way faster than on cpu on our laptops), on the whole imdb dataset (12.5k records instead of 3k) and reached around 89% acc on test data with pre trained embedding. 
 
-**Next session 30th Jan**, 
-recommended homework: please read before coming the article from wildml above and check our work so far in experiments/keras_cnn_with_multiple_channels.ipynb and experiments/keras_cnn_with_pretrained_embedding.ipynb (WIP). If you don't, it's going to be really hard to follow ;).
+**Next session 6th Feb**, 
+no homework for this session
 
-We will carry on the work of the previous session and fix the CNN with the pre trained embedding from Glove. We will compare the results of training the embedding on our dataset vs not doing it.
+We have so far trained many different models from ML (logistic reg, random forest) to DL (simple NN, CNN, RNN) with multiple vectorization techniques and with the use in some case of pre trained embeddings. We are going to go through each one of them again, format them nicely, train them on the whole dataset on google colab and on as many epochs as possible until it reaches a plateau on the accuracy of the validation data set. We will bring together the results of each training and plot the performances and time to run to compare the different models, vectorization techniques and use or not of pre trained embedding.
 
-If we have enough time, We will define a reasonnable dataset and vocabulary size and train with those parameters, then compare the accuracies obtained. We will run the training on GPU on colab and compare the amounts of time to process it.
 
 **In the following weeks**, we will
 - plot the results of all different architectures and compare them
