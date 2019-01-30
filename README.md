@@ -27,7 +27,6 @@ We will carry on the work of the previous session and fix the CNN with the pre t
 If we have enough time, We will define a reasonnable dataset and vocabulary size and train with those parameters, then compare the accuracies obtained. We will run the training on GPU on colab and compare the amounts of time to process it.
 
 **In the following weeks**, we will
-- try different NN architectures
 - plot the results of all different architectures and compare them
 - optimize our NN model
 - try cloud based APIs to compare how they perform against our models
