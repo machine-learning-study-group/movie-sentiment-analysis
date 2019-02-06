@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 16th Jan 2019 
+## Update Session 30th Jan 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
@@ -9,29 +9,24 @@ Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 201
 - check multiple algorithms and compared performances: logistic regression, random forest and NN models. 
 - started optimizing our NN model (work on dropout) in 3_opti_neural_net.ipynb
 - tried different architectures in experiments folder: LSTM, DAN, CNN
+- tried with pre trained embeddings from Glove and Google (word2vec)
 
 **In this session**, 
 
-We started implementing a CNN in Keras with multiple filters, in experiments/keras_nn_cnn_20190116.ipynb, using the following:
+We completed the implementation of a CNN in Keras with multiple channels and pre trained embedding, in experiments/keras_cnn_with_pretrained_embedding.ipynb, using the following:
 
-https://arxiv.org/abs/1408.5882 research paper on sentence classification with CNN
-http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ tensorflow rewrite
-http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/ explanation of CNN use in NLP
+http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/ sentence classification with CNN with tensorflow
+https://machinelearningmastery.com/develop-n-gram-multichannel-convolutional-neural-network-sentiment-analysis/ cnn in keras with multiple channels
 
-https://github.com/dennybritz/cnn-text-classification-tf tensorflow rewrite code
+We ran the two cnn notebooks with and without pre trained embedding on Google Colab with gpu (way faster than on cpu on our laptops), on the whole imdb dataset (12.5k records instead of 3k) and reached around 89% acc on test data with pre trained embedding. 
 
-We prepared the data, initiated the model with embedding, convolution/pooling layers with dropout and output layer with softmax (with hopefully the correct dimensions ;) ). We now have to change the model to use multiple filters, I added a couple links about people's attempts at that, train it and evaluate it.
+**Next session 6th Feb**, 
+no homework for this session
 
-**Next session 23rd Jan**, 
+We have so far trained many different models from ML (logistic reg, random forest) to DL (simple NN, CNN, RNN) with multiple vectorization techniques and with the use in some case of pre trained embeddings. We are going to go through each one of them again, format them nicely, train them on the whole dataset on google colab and on as many epochs as possible until it reaches a plateau on the accuracy of the validation data set. We will bring together the results of each training and plot the performances and time to run to compare the different models, vectorization techniques and use or not of pre trained embedding.
 
-We will carry on the work of the previous session and complete the reimplementation in Keras.
-
-We will add if we have enough time, the pre trained embedding with word2vec.
-
-As a prerequesite, please read at least the 2 articles from wildml and our work so far in experiments/keras_nn_cnn_20190116.ipynb
 
 **In the following weeks**, we will
-- try different NN architectures
 - plot the results of all different architectures and compare them
 - optimize our NN model
 - try cloud based APIs to compare how they perform against our models
