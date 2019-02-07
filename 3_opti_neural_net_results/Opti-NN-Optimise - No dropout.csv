@@ -1,0 +1,2 @@
+,acc,loss,val_acc,val_loss,title,sample_size,vocab_size,nb_epochs
+0,0.9883999824523926,0.09193723797798156,0.8623999953269958,0.3335778474807739,Opti-NN-Optimise - No dropout,5000,53956,5
