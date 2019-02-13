@@ -1,0 +1,2 @@
+,val_loss,val_acc,val_categorical_accuracy,loss,acc,categorical_accuracy,title,sample_size,nb_epochs
+0,0.3620563878631592,0.8417600000762939,0.8417600000762939,0.405206751241684,0.8195733337402343,0.8195733337402343,Keras DAN,12500,12
