@@ -1,0 +1,2 @@
+,acc,loss,val_acc,val_loss,title,sample_size,vocab_size,nb_epochs
+0,0.9872381091117859,0.10083997214124316,0.8857142925262451,0.30014909165246145,Opti-NN-Train NN 50 - 10 - 1,7000,63867,4
