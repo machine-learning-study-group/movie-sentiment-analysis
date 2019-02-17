@@ -1,0 +1,2 @@
+,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs
+0,0.7734158039093018,0.4860889853407687,0.8151941895484924,0.42911600152040924,Opti-NN-Train NN with K-Fold cross validation - fold 2,7030,64,0.3333333333333333,4686,2343,1000,5

@@ -1,2 +1,0 @@
-,acc,loss,val_acc,val_loss,title,sample_size,vocab_size,nb_epochs
-0,0.9828000068664551,0.1356727421283722,0.864799976348877,0.34739031791687014,Opti-NN-Train NN with K-Fold cross validation,5000,53956,5
