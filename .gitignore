@@ -23,6 +23,7 @@ visualtool.py
 raw_data/*
 .ipynb_checkpoints/
 
+=======
 MANIFEST
 build
 dist
@@ -30,13 +31,6 @@ _build
 docs/man/*.gz
 docs/source/api/generated
 docs/source/config.rst
-docs/gh-pages
-notebook/i18n/*/LC_MESSAGES/*.mo
-notebook/i18n/*/LC_MESSAGES/nbjs.json
-notebook/static/components
-notebook/static/style/*.min.css*
-notebook/static/*/js/built/
-notebook/static/*/built/
 notebook/static/built/
 notebook/static/*/js/main.min.js*
 notebook/static/lab/*bundle.js
@@ -63,12 +57,9 @@ config.rst
 /.project
 /.pydevproject
 
-
-**/aclImdb
-aclImdb/
-./aclImdb
 aclImdb_v1.tar.gz
 aclImdb/*
+**/aclImdb
 package-lock.json
 raw_data/*
 reference/*

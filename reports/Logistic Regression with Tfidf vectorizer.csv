@@ -1,0 +1,2 @@
+,title,sample_size,acc,val_acc
+0,Logistic Regression with Tfidf vectorizer,12500,0.9266133333333333,0.88256

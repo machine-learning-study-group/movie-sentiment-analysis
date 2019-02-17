@@ -1,0 +1,2 @@
+,acc,loss,val_acc,val_loss,title,sample_size,vocab_size,nb_epochs
+0,0.9843999743461609,0.10871877670288085,0.8655999898910522,0.32861419916152956,Opti-NN-Optimise - Low dropout on 1 layer,5000,53956,5
