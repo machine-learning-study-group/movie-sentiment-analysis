@@ -1,2 +1,2 @@
-,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs
-0,0.7934933304786682,0.4580307288233439,0.837440013885498,0.3758724998950958,Opti-NN-Train NN 256 - 128 - 1,12500,64,0.25,9375,3125,1000,5
+,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs,training_duration_in_secs
+0,0.883840024471283,0.2823379472875595,0.8367999792098999,0.39239724227905276,Opti-NN-Train NN 256 - 128 - 1,12500,64,0.25,9375,3125,1000,5,6.271967649459839

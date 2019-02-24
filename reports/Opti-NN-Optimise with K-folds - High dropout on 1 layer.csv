@@ -1,2 +1,2 @@
-,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs
-0,0.7587199807167053,0.5068007233810424,0.837119996547699,0.39804306848526,Opti-NN-Optimise with K-folds - High dropout on 1 layer,9375,64,0.3333333333333333,6250,3125,1000,5
+,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs,training_duration_in_secs
+0,0.8612800240516663,0.3368386618614197,0.8432000279426575,0.3693536007118225,Opti-NN-Optimise with K-folds - High dropout on 1 layer,9375,64,0.3333333333333333,6250,3125,1000,5,20.440293550491333
