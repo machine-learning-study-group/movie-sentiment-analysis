@@ -1,0 +1,2 @@
+,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs,training_duration_in_secs
+0,0.7824000120162964,0.47024287996292113,0.8377599716186523,0.39341031623840333,Opti-NN-Optimise with K-folds - No dropouts,9375,64,0.3333333333333333,6250,3125,1000,5,16.8814799785614
