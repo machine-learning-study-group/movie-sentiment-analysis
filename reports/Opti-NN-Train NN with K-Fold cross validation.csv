@@ -1,2 +1,2 @@
 ,acc,loss,val_acc,val_loss,title,sample_size,batch_size,train_test_ratio,training_set_size,validation_set_size,vocab_size,nb_epochs,training_duration_in_secs
-0,0.883840024471283,0.2832389439058304,0.8403199911117554,0.39203190813064576,Opti-NN-Train NN with K-Fold cross validation,9375,64,0.3333333333333333,6250,3125,1000,5,15.75686240196228
+0,0.7748799920082092,0.4754857807064056,0.8441600203514099,0.3899542323589325,Opti-NN-Train NN with K-Fold cross validation,9375,64,0.3333333333333333,6250,3125,1000,5,45.12007522583008
