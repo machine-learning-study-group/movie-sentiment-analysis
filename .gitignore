@@ -66,3 +66,7 @@ reference/*
 reference_tweepy/*
 reference_hands_on/*
 public_raw_data/*
+
+# specific to project
+experiments/data
+experiments/glove*
