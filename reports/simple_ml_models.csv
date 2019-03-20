@@ -1,7 +1,7 @@
 ,title,sample_size,acc,val_acc
 0,LinearSVC tfidf,50000,0.99008,0.87716
 0,LinearSVC hashing,50000,0.9408,0.88344
-0,Rand for tfidf,50000,0.99372,0.73068
-0,Rand for hashing,50000,0.9938,0.72992
+0,Rand for tfidf,50000,0.9934,0.731
+0,Rand for hashing,50000,0.99332,0.73616
 0,log reg Tfidf,50000,0.9332,0.883
 0,log reg Hashing,50000,0.88008,0.85996
