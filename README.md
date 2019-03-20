@@ -1,7 +1,7 @@
 # movie-sentiment-analysis
 Sentiment analysis of movie (IMDB) reviews using dataset provided by the ACL 2011 paper, see http://ai.stanford.edu/~amaas/data/sentiment/.
 
-## Update Session 6th March 2019 
+## Update Session 20th March 2019 
 
 **We so far**
 - explored the data in 1_data_exploration.ipynb
@@ -17,10 +17,10 @@ We have so far trained many different models from ML (logistic reg, random fores
 We are going to go through each one of them again, format them nicely, train them on the whole dataset on google colab using GPU and on as many epochs as possible until it reaches a plateau on the accuracy of the validation data set. We will bring together the results of each training and plot the performances and time to run to compare the different models, vectorization techniques and use or not of pre trained embedding.
 
 **In this session**, 
-very short one (everyone stuck at work turned up late)
-review and small improvements on ML notebook. discussed next steps for the study group.
+work on all models to standardize them and run them on Colab
+see progress on https://docs.google.com/spreadsheets/d/1lzs-zJQrujXu5fzHxe3YRP9a8Djx1d6ubtIJAFJ9ee8
 
-**Next session 13th March**, 
+**Next session 27th March**, 
 We will carry on with our project on sentiment analysis. 
 We will train the NN models on colab again on a larger dataset (50k instead of 12.5k), use the same metric everywhere (f1 score), add the time it took to train the model.
 Then we will compare the results again, compare them to those of the research papers we worked on, and try to interpret them.
