@@ -6,6 +6,9 @@
 # Run this as follows to mount current directory for notebooks
 # docker container run -it --rm -u $(id -u):$(id -g) -p 8888:8888 -v $(pwd):/home/jupyter/notebooks ml-group
 
+# or if using image from docker hub
+# docker container run -it --rm -u $(id -u):$(id -g) -p 8888:8888 -v $(pwd):/home/jupyter/notebooks davesnowdon/ml-study-group-movie-sentiment
+
 # uncomment this to use GPU
 #FROM tensorflow/tensorflow:latest-gpu-py3 python
 # uncomment this to use CPU
@@ -22,8 +25,10 @@ FROM tensorflow/tensorflow:latest-py3
 # verify all looks good by running
 # sudo nvidia-container-cli --load-kmods info
 
-RUN pip install wget pandas matplotlib nltk keras scikit-learn jupyterlab nbdiff
+RUN pip install wget pandas matplotlib nltk keras scikit-learn jupyterlab nbdime
 
+# enable nbdime Jupyter notebook diffing extension
+RUN nbdime extensions --enable --system
 
 RUN mkdir /home/jupyter
 RUN chmod 777 /home/jupyter
